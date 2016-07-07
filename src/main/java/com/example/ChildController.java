@@ -2,6 +2,7 @@ package com.example;
 
 import de.tho.DummyService;
 import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Controller;
@@ -15,7 +16,21 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("beans")
 public class ChildController implements ApplicationContextAware{
 
+    private DummyService dummyService;
     private ApplicationContext applicationContext;
+
+//    @Autowired
+//    public ChildController(DummyService dummyService) {
+//        this.dummyService = dummyService;
+//    }
+
+    private DummyService getDummyService(){
+        if (this.dummyService == null){
+            this.dummyService = (DummyService) applicationContext.getParent().getBean("dummyService");
+        }
+
+        return this.dummyService;
+    }
 
     @RequestMapping("")
     @ResponseBody
@@ -34,8 +49,8 @@ public class ChildController implements ApplicationContextAware{
     @RequestMapping("service")
     @ResponseBody
     public String service(){
-        DummyService dummyService = (DummyService) applicationContext.getParent().getBean("dummyService");
-        return dummyService.getMessage();
+
+        return getDummyService().getMessage();
     }
 
     @Override
