@@ -14,6 +14,6 @@ import org.springframework.context.annotation.Configuration;
 public class ParentChildApplication {
 
     public static void main(String[] args) {
-        ApplicationContext ctx = SpringApplication.run(ParentChildApplication.class, args);
+        SpringApplication.run(ParentChildApplication.class, args);
     }
 }

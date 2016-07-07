@@ -39,14 +39,6 @@ public class ChildContextConfig implements ApplicationContextAware, ApplicationL
         final AnnotationConfigEmbeddedWebApplicationContext childContext = new AnnotationConfigEmbeddedWebApplicationContext(ChildContext.class);
         childContext.setParent(this.applicationContext);
         childContext.setId(this.applicationContext.getId() + ":child");
-
-//        childContext.register(
-//                PropertyPlaceholderAutoConfiguration.class,
-//                EmbeddedServletContainerAutoConfiguration.class,
-//                DispatcherServletAutoConfiguration.class
-//        );
-
-//        childContext.refresh();
     }
 
     @Override

@@ -16,16 +16,13 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @Configuration
 @EnableWebMvc
 @ComponentScan("com.example")
-@Import({PropertyPlaceholderAutoConfiguration.class, EmbeddedServletContainerAutoConfiguration.class,
-        DispatcherServletAutoConfiguration.class})
+@Import({PropertyPlaceholderAutoConfiguration.class, EmbeddedServletContainerAutoConfiguration.class, DispatcherServletAutoConfiguration.class})
 public class ChildContext {
 
     @Bean
     public ServerProperties serverProperties() {
         ServerProperties props = new ServerProperties();
-        props.setPort(8085);
-//        props.setServletPath("/");
-//        props.setContextPath("/");
+        props.setPort(9091);
         return props;
     }
 }
