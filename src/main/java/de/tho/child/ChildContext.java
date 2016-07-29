@@ -1,4 +1,4 @@
-package com.example;
+package de.tho.child;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -15,7 +15,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @Configuration
 //@EnableWebMvc
 @EnableAutoConfiguration
-@ComponentScan("com.example")
+@ComponentScan(basePackages = {"de.tho.child", "de.tho.business"})
 @PropertySource("child-context.properties")
 @Import({PropertyPlaceholderAutoConfiguration.class, EmbeddedServletContainerAutoConfiguration.class, DispatcherServletAutoConfiguration.class})
 public class ChildContext {

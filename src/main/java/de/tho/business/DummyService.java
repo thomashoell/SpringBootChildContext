@@ -1,4 +1,4 @@
-package de.tho;
+package de.tho.business;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
