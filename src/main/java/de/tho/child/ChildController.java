@@ -16,16 +16,11 @@ import java.util.Arrays;
  * Created by Hoell on 07.07.2016.
  */
 @Controller
-@RequestMapping("")
+@RequestMapping
 public class ChildController implements ApplicationContextAware {
 
     private DummyService dummyService;
     private ApplicationContext applicationContext;
-
-    @Autowired
-    public ChildController(DummyService dummyService) {
-        this.dummyService = dummyService;
-    }
 
     @RequestMapping("")
     @ResponseBody
