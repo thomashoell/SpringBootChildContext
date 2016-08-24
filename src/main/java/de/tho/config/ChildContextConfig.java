@@ -24,7 +24,7 @@ import javax.servlet.Servlet;
 @Configuration
 @ConditionalOnClass({Servlet.class, DispatcherServlet.class})
 @ConditionalOnWebApplication
-public class ChildContextConfig implements ApplicationContextAware, ApplicationListener<ContextRefreshedEvent> {
+public class ChildContextConfig implements ApplicationContextAware {
 
     private final Logger logger = LoggerFactory.getLogger(ChildContextConfig.class);
     private ApplicationContext applicationContext;
@@ -36,9 +36,11 @@ public class ChildContextConfig implements ApplicationContextAware, ApplicationL
 
     private void createChildContext_working() {
         logger.info("creating child context");
-        final AnnotationConfigEmbeddedWebApplicationContext childContext = new AnnotationConfigEmbeddedWebApplicationContext(ChildContext.class);
-        childContext.setParent(this.applicationContext);
+        final AnnotationConfigEmbeddedWebApplicationContext childContext = new AnnotationConfigEmbeddedWebApplicationContext();
+        childContext.register(ChildContext.class);
         childContext.setId(this.applicationContext.getId() + ":child");
+        childContext.refresh();
+        childContext.setParent(this.applicationContext);
     }
 
     private void createChildContext_failing() {
@@ -50,8 +52,8 @@ public class ChildContextConfig implements ApplicationContextAware, ApplicationL
         childContext.refresh();
     }
 
-    @Override
-    public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
+    @EventListener(ContextRefreshedEvent.class)
+    public void parentContextRefreshed(ContextRefreshedEvent contextRefreshedEvent) {
         logger.info("parent context refreshed");
         // this works but I cannot autowire because the parent is set after refresh
         createChildContext_working();
