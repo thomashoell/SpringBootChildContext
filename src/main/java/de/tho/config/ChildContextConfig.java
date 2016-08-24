@@ -12,6 +12,8 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.context.event.EventListener;
+import org.springframework.core.env.StandardEnvironment;
 import org.springframework.web.servlet.DispatcherServlet;
 
 import javax.servlet.Servlet;
@@ -32,15 +34,29 @@ public class ChildContextConfig implements ApplicationContextAware, ApplicationL
         this.applicationContext = applicationContext;
     }
 
-    private void createChildContext() {
+    private void createChildContext_working() {
+        logger.info("creating child context");
         final AnnotationConfigEmbeddedWebApplicationContext childContext = new AnnotationConfigEmbeddedWebApplicationContext(ChildContext.class);
         childContext.setParent(this.applicationContext);
         childContext.setId(this.applicationContext.getId() + ":child");
     }
 
+    private void createChildContext_failing() {
+        logger.info("creating child context");
+        final AnnotationConfigEmbeddedWebApplicationContext childContext = new AnnotationConfigEmbeddedWebApplicationContext();
+        childContext.setParent(this.applicationContext);
+        childContext.setId(this.applicationContext.getId() + ":child");
+        childContext.register(ChildContext.class);
+        childContext.refresh();
+    }
+
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
-        logger.info("creating child context");
-        createChildContext();
+        logger.info("parent context refreshed");
+        // this works but I cannot autowire because the parent is set after refresh
+        createChildContext_working();
+
+        // this loops forever
+//        createChildContext_failing();
     }
 }
