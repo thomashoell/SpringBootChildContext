@@ -19,8 +19,13 @@ import java.util.Arrays;
 @RequestMapping
 public class ChildController implements ApplicationContextAware {
 
-    private DummyService dummyService;
     private ApplicationContext applicationContext;
+    private final DummyService dummyService;
+
+    @Autowired
+    public ChildController(DummyService dummyService) {
+        this.dummyService = dummyService;
+    }
 
     @RequestMapping("")
     @ResponseBody
