@@ -1,6 +1,5 @@
-package de.tho.config;
+package de.tho.child;
 
-import de.tho.child.ChildContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
@@ -39,8 +38,8 @@ public class ChildContextConfig implements ApplicationContextAware {
         final AnnotationConfigEmbeddedWebApplicationContext childContext = new AnnotationConfigEmbeddedWebApplicationContext();
         childContext.register(ChildContext.class);
         childContext.setId(this.applicationContext.getId() + ":child");
-        childContext.refresh();
         childContext.setParent(this.applicationContext);
+        childContext.refresh();
     }
 
     private void createChildContext_failing() {
