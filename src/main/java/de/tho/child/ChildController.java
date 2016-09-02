@@ -21,10 +21,12 @@ public class ChildController implements ApplicationContextAware {
 
     private ApplicationContext applicationContext;
     private final DummyService dummyService;
+    private final ChildControllerConfig childControllerConfig;
 
     @Autowired
-    public ChildController(DummyService dummyService) {
+    public ChildController(DummyService dummyService, ChildControllerConfig childControllerConfig) {
         this.dummyService = dummyService;
+        this.childControllerConfig = childControllerConfig;
     }
 
     @RequestMapping("")
@@ -37,7 +39,7 @@ public class ChildController implements ApplicationContextAware {
     @ResponseBody
     public String service() {
 
-        return dummyService.getMessage();
+        return dummyService.getMessage() + " " + childControllerConfig.getSomeProperty();
     }
 
     @Override

@@ -21,7 +21,7 @@ import javax.servlet.Servlet;
 /**
  * Created by Hoell on 07.07.2016.
  */
-@Configuration
+//@Configuration
 @ConditionalOnClass({Servlet.class, DispatcherServlet.class})
 @ConditionalOnWebApplication
 public class ChildContextConfig implements ApplicationContextAware {

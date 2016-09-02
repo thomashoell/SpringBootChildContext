@@ -19,14 +19,4 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @PropertySource("child-context.properties")
 @EnableAutoConfiguration(exclude = {DataSourceAutoConfiguration.class, HibernateJpaAutoConfiguration.class})
 public class ChildContext {
-
-    @Value("${server.port}")
-    private Integer port;
-
-    @Bean
-    public ServerProperties serverProperties() {
-        ServerProperties props = new ServerProperties();
-        props.setPort(port);
-        return props;
-    }
 }
